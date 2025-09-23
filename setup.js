@@ -16,7 +16,7 @@ const ACSHostAndPort = ACSUrl.port ? `${ACSUrl.hostname}:${ACSUrl.port}` : ACSUr
 
 // Request info
 const method = "PUT";
-const requestUrl = `https://corertc-test-apps.unitedstates.communication.azure.com/access/teamsExtension/tenants/${TEAMS_TENANT_ID}/assignments/${OBJECT_ID}?api-version=2025-03-02-preview`;
+const requestUrl = `${acsUrl}access/teamsExtension/tenants/${TEAMS_TENANT_ID}/assignments/${OBJECT_ID}?api-version=2025-03-02-preview`;
 const requestBody = {
     "principalType": "user",
     "tenantId": TEAMS_TENANT_ID,
