@@ -1,22 +1,27 @@
 const axios = require("axios");
 const CryptoJS = require("crypto-js");
 
-// Load from env or config
+// Optionally load from .env file
+try {
+    require('dotenv').config();
+} catch (err) {
+    // .env file not found or dotenv not available, continue with environment variables
+}
 
-let APIKey ="<Your ACS API Key Here>";
-let acsUrl = process.env.ACS_URL || "<Your ACS Resource URL Here>";
+let ACS_API_KEY = process.env.ACS_API_KEY || "<Your ACS API Key Here>";
+let ACS_ENDPOINT = process.env.ACS_ENDPOINT || "<Your ACS Resource URL Here>";
 let TEAMS_TENANT_ID = process.env.TEAMS_TENANT_ID || "<Your Teams Tenant ID Here>";
 let APP_ID = process.env.APP_ID || "<Your App ID Here>";
-let OBJECT_ID = process.env.OBJECT_ID || "<Your Object ID Here>";
+let USER_OBJECT_ID = process.env.USER_OBJECT_ID || "<Your Object ID Here>";
 const isLocal = process.env.IsLocal === "true";
 
 // Construct URL and host
-const ACSUrl = new URL(acsUrl);
+const ACSUrl = new URL(ACS_ENDPOINT);
 const ACSHostAndPort = ACSUrl.port ? `${ACSUrl.hostname}:${ACSUrl.port}` : ACSUrl.hostname;
 
 // Request info
 const method = "PUT";
-const requestUrl = `https://corertc-test-apps.unitedstates.communication.azure.com/access/teamsExtension/tenants/${TEAMS_TENANT_ID}/assignments/${OBJECT_ID}?api-version=2025-03-02-preview`;
+const requestUrl = `${ACS_ENDPOINT}access/teamsExtension/tenants/${TEAMS_TENANT_ID}/assignments/${USER_OBJECT_ID}?api-version=2025-03-02-preview`;
 const requestBody = {
     "principalType": "user",
     "tenantId": TEAMS_TENANT_ID,
@@ -60,7 +65,7 @@ console.log("String to sign:", stringToSign);
 
 // HMAC-SHA256
 const signatureRawData = CryptoJS.enc.Utf8.parse(stringToSign);
-const secretByteArray = CryptoJS.enc.Base64.parse(APIKey);
+const secretByteArray = CryptoJS.enc.Base64.parse(ACS_API_KEY);
 const signatureBytes = CryptoJS.HmacSHA256(signatureRawData, secretByteArray);
 const requestSignatureBase64String = CryptoJS.enc.Base64.stringify(signatureBytes);
 
