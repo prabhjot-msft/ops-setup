@@ -12,7 +12,7 @@ let ACS_API_KEY = process.env.ACS_API_KEY || "<Your ACS API Key Here>";
 let ACS_ENDPOINT = process.env.ACS_ENDPOINT || "<Your ACS Resource URL Here>";
 let TEAMS_TENANT_ID = process.env.TEAMS_TENANT_ID || "<Your Teams Tenant ID Here>";
 let APP_ID = process.env.APP_ID || "<Your App ID Here>";
-let USER_OBJECT_ID = process.env.OBJECT_ID || "<Your Object ID Here>";
+let USER_OBJECT_ID = process.env.USER_OBJECT_ID || "<Your Object ID Here>";
 const isLocal = process.env.IsLocal === "true";
 
 // Construct URL and host
